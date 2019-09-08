@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据链路</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 生成目录列表
+        var outline = document.createElement("ul");
+        outline.setAttribute("id", "outline-list");
+        outline.style.cssText = "border: 1px solid #ccc;";
+        document.body.insertBefore(outline, document.body.childNodes[0]);
+        // 获取所有标题
+        var headers = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+        for (var i = 0; i < headers.length; i++) {
+            var header = headers[i];
+            var hash = _hashCode(header.textContent);
+            // MarkdownPad2无法为中文header正确生成id，这里生成一个
+            header.setAttribute("id", header.tagName + hash);
+            // 找出它是H几，为后面前置空格准备
+            var prefix = parseInt(header.tagName.replace('H', ''), 10);
+            outline.appendChild(document.createElement("li"));
+            var a = document.createElement("a");
+            // 为目录项设置链接
+            a.setAttribute("href", "#" + header.tagName + hash)
+            // 目录项文本前面放置对应的空格
+            a.innerHTML = new Array(prefix * 4).join('&nbsp;') + header.textContent;
+            outline.lastChild.appendChild(a);
+        }
+    });
+    // 类似Java的hash生成方式，为一段文字生成一段基本不会重复的数字
+    function _hashCode(txt) {
+         var hash = 0;
+         if (txt.length == 0) return hash;
+         for (i = 0; i < txt.length; i++) {
+              char = txt.charCodeAt(i);
+              hash = ((hash<<5)-hash)+char;
+              hash = hash & hash; // Convert to 32bit integer
+         }
+         return hash;
+    }
+</script>
+</head>
+<body>
+<h2>3、数据链路</h2>
+<p><strong>本章主要介绍计算机网络最基本的内容-数据链路层。如果没有数据链路层，基于TCP/IP的通行就无从谈起。</strong></p>
+<h3>3.1数据链路的作用</h3>
+<pre><code>数据链路，指OSI参考模型中的数据链路层，有时也指以太网、无线局域网等通信手段。
+</code></pre>
+
+<p><font color="red"><strong>数据链路层的协议定义了通信媒介互联的设备之间传输的规范。通信媒介包括双绞线电缆，同轴电缆、光纤、电波以及红外线灯介质。此外，各个设备之间有时会通过交换机、网桥、中继器等中转数据。</strong></font><br></p>
+<pre><code>数据链路层处理的数据不再是单纯的0、1序列，该层把它们集合为一个叫做帧的块，然后再进行传输。
+
+数据链路也可以被视为网络传输中最小的单位。
+
+其实仔细观察连通全世界的互联网就可以发现，它也不外乎是由众多这样的数据链路组成的。
+</code></pre>
+
+<p><img src="0.PNG" /></p>
+<p><strong>网络拓抪</strong><br>
+<em>网络的链接和构成的形态称为网络拓抪（Topology）。网络拓抪包括总线型、环型、星型、网状型等。拓抪一词不仅用于直观可见的配线方式，也用于逻辑上网络的组成结构</em>。
+<img src="1.PNG" /></p>
+<h3>3.2数据链路层相关技术</h3>
+<h4>3.2.1 MAC地址</h4>
+<p><strong>MAC地址用于识别数据链路中互连的节点。通过MAC地址判断目标地址。</strong>
+<img src="2.PNG" />
+<br>
+<strong>MAC地址长48比特，在使用网卡（NIC)的情况下，MAC地址地址一般会被烧入到ROM中，因此，任何一个网卡的MAC地址都是唯一的，在全世界都不会有重复。</strong><br>
+<img src="3.PNG" />
+<br></p>
+<p><strong>IEEE802.3制定地址规范时没有限定数据链路的类型，即不论哪种数据链路的网络（以太网、FDDI、ATM、无线LAN、蓝牙等），都不会有想听的MAC地址出现</strong><br></p>
+<h4>3.2.2 共享介质型网络</h4>
+<p><strong>从通信介质（通信，介质）的使用方法上看，网络可分为共享介质型和非共享介质型。</strong><br></p>
+<pre><code>共享介质型网络是指由多个网络设备共享一个通信介质的一种网络。最早的以太网和FDDI就是共享介质型网络。
+在这种方式下，设备之间使用同一个载波信道进行发送和接收。
+为此，基本采用半双工通信方式，并有必要对介质进行访问控制。
+</code></pre>
+
+<p><strong>共享介质型网络中有两种介质访问控制方式：一种是争用方式，另一种是令牌传递方式。</strong><br></p>
+<p><font color="red" size="10px">争用方式</font><br>
+<em>争用方式是指争夺获取数据传输的权利，也叫CSMA(载波监听多路访问)。这种方法通常玲网络中的各个站采用先到先得的方式占用信道发送数据，如果多个站同时发送帧，则会产生冲突现象。因此会导致网络拥堵和性能下降</em><br>
+<img src="4.PNG" /></p>
+<p><font color="red" size="10px">令牌传递方式</font><br></p>
+<p><em>令牌传递方式是沿着令牌环发送一种叫做“令牌”的特殊报文，是控制传输的一种方式。只有获得令牌的站才能发送数据。这种方式有两个特点：一是不会有冲突，二十每个站都有通过平等循环获得令牌的机会。因此，即使网络拥堵也不会导致性能下降。</em><br>
+<img src="5.PNG" /></p>
+<h4>3.2.3非共享介质网络</h4>
+<p><strong>非共享介质网络是指不共享介质，是对介质采取专用的一种传输控制的方式。在这种方式下，网络中每个站直连交换机，由交换机负责转发数据帧。此方式下，发送端与接收端并不共享通信介质，因此很多情况下采用全双工通信方式。</strong><br></p>
+<p><em>不仅ATM采用这种传输控制方式，最近它也称为了以太网的主流方式。通过以太网交换机构建网络，从而使得计算机与交换机端口之间形成一对一的链接，即可实现全双工通信。</em><br></p>
+<p><em>该方式还可以根据交换机的高级特性构建虚拟局域网、进行流量控制等。当然，这种方式也有一个致命的弱点，那就是一旦交换机发生故障，与之相连的所有计算机之间都将无法通信</em><br>
+<img src="6.PNG" /></p>
+<h4>3.2.4 根据MAC地质转发</h4>
+<pre><code>在使用同轴电缆的以太网等介质共享网络中，同一时间只能有一台爱主机发送数据。当联网的主句数量增加时，通信性能会明显下降。
+若将集线器或集中器等设备以星型连接，就出现了一种新的网络设备--交换集线器，这是一种将非介质共享型网络中所使用的交换机用在以太网中的技术，交换集线器也叫做以太网交换机。
+</code></pre>
+
+<p><font color="red"><strong>以太网交换机就是持有多个端口的网桥，它们根据数据链路层中每个帧的目标MAC地址，决定从哪个网络接口发送数据。这时所参考的、用以记录发送接口的表就叫做转换表。</strong></font><br>
+<img src="7.PNG" /></p>
+<h3>3.3、以太网</h3>
+<p><strong>在众多数据链路中最为著名、使用最为广泛的莫过于以太网。</strong></p>
+<h4>3.3.1以太网连接形式</h4>
+<pre><code>在以太网普及之初，一般采用多台终端使用同一根电缆的共享介质型连接方式。
+</code></pre>
+
+<p><img src="8.PNG" /></p>
+<pre><code>而现在，随着互联网设备的处理能力以及传输速度的提高，一般都采用终端与交换机之间独占电缆的方式实现以太网通信。
+</code></pre>
+
+<p><img src="9.PNG" /></p>
+<h4>3.3.2以太网的分类</h4>
+<p><strong>以太网因通信电缆的不同以及通信速度的差异，衍生了众多不同的以太网类型。</strong><br></p>
+<h4>3.3.3 以太网帧格式</h4>
+<p><strong>以太网前端有一个叫做前导码的部分，它由0、1数字交替组合而成，表示以太网帧的格式，也是对端网卡能够确保与其同步的标志。前端码末尾是一个叫做SFD(Start Frame Delimiter)的域，他的值是“11”。在这个域之后就是以太网帧的额本体、</strong></p>
+<p><img src="10.PNG" /></p>
+<p><strong>以太网帧本体的前端是以太网的首部，它总共占14个字节。分别是6个字节的目标MAC地址、6个字节的源MAC地址以及2个字节的上层协议类型</strong><br></p>
+<p><img src="11.PNG" /></p>
+<ul>
+<li>紧随帧头后面的数据。一个数据帧所能容纳的最大数据范围是46~1500个字节。</li>
+<li>帧尾是一个叫FCS(Frame Check Sequence,帧检验序列)的4个字节。</li>
+<li>目标MAC地址中存放了目标工作站的物理地址</li>
+<li>源MAC地址存放可构造以太网帧的发送端工作站的物理地址</li>
+<li>类型通常跟数据一起发送，它包含用以标志协议类型的编号：即表明以太网的再上一层网络协议的类型。在这个字段后面，则是类型所标志的协议首部及其数据。</li>
+<li>帧尾最后出现的是FCS。用它可以检查帧是否有所损坏。在通信传输过程中如果出现电子噪声的干扰，可能会影响发送数据导致乱码位的出现。通过检查这个FCS字段的值可以将那些受到噪声干扰的错误帧丢弃。</li>
+</ul>
+<h3>3.4无线通信</h3>
+<pre><code>无线通信通常使用电磁波、红外线、激光灯方式进行传播数据。一般在办公室的局域网范围内组成的较高速的链接称为无线局域网。
+
+无线通信不需要网线或其他可见电缆。因此，早期无线通信主要用于轻量级的移动设备。
+</code></pre>
+
+<h4>3.4.1无线通信的种类</h4>
+<p><img src="12.PNG" /></p>
+<ul>
+<li>蓝牙</li>
+<li>WiMAX</li>
+<li>ZigBee</li>
+</ul>
+<h3>3.7 公共网络</h3>
+<pre><code>前面介绍了很多局域网链接相关的知识。
+
+所谓的公共通信服务类似于电信运营商(如NTT、KDDI）提供的电话网络。
+
+人们通过与这些运营商签约、付费不仅可以实现联网还可以与距离遥远的组织进行通信。
+</code></pre>
+
+<h4>3.7.1 模拟电话线路</h4>
+<pre><code>*模拟电话线路其实就是利用固定电话线路进行通信。电话线中的音频带宽用于拨号上网。该方法不需要特殊的通信线路，完全使用已经普及的电话网。*
+</code></pre>
+
+<p><img src="13.PNG" /></p>
+<h4>3.7.2、移动电话通信</h4>
+<pre><code>特点：只要在服务区范围内，就可以连接到运营商的网络。
+</code></pre>
+
+<h4>3.7.3、ADSL</h4>
+<h4>3.7.4、FTTH</h4>
+<pre><code>FFTH:就是一根告诉光纤直接连到用户家里或公司建筑物出
+
+它通过一个叫做OUT的装置将计算机与之关联。该庄主负责在光信号与电子信号之间的转换，实现FTTH可以实现稳定的高速通信。
+
+不过他的线路传输速率与具体的服务内容仍受个别运用服务商限制。
+</code></pre>
+
+<p><img src="14.PNG" /></p>
+<h4>3.7.5 有线电视</h4>
+<h4>3.7.6 专线</h4>
+<h4>3.7.7 VPN</h4>
+<h4>3.7.8公共无线LAN</h4>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
